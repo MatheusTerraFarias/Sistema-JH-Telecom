@@ -105,6 +105,31 @@ loginForm.addEventListener('submit', async (e) => {
     console.log('🔄 Enviando requisição para:', `${API_BASE}/auth/login`);
     console.log('📤 Dados:', { email, senha: '***' });
     
+    // Simulação de login para teste (remover quando o backend estiver funcionando)
+    const mockUsers = [
+      { email: 'admin@jhtelecom.com', senha: 'admin123', user: { id: 1, nome: 'Admin', email: 'admin@jhtelecom.com', role: 'admin', online: true } },
+      { email: 'joao@jhtelecom.com', senha: 'joao123', user: { id: 2, nome: 'João', email: 'joao@jhtelecom.com', role: 'atendente', online: true } },
+      { email: 'maria@jhtelecom.com', senha: 'maria123', user: { id: 3, nome: 'Maria', email: 'maria@jhtelecom.com', role: 'atendente', online: true } }
+    ];
+    
+    const userData = mockUsers.find(u => u.email === email && u.senha === senha);
+    
+    if (userData) {
+      // Simular delay de rede
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      console.log('📨 Resposta simulada - status: 200');
+      console.log('📨 Dados simulados:', { message: 'Login realizado com sucesso', user: userData.user });
+      
+      currentUser = userData.user;
+      localStorage.setItem('user', JSON.stringify(currentUser));
+      
+      hideLoading();
+      showLoginSuccess();
+      return;
+    }
+    
+    // Se não encontrou usuário, tentar conexão real com o backend
     const response = await fetch(`${API_BASE}/auth/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -390,30 +415,32 @@ function applyFilters() {
   const responsavel = document.getElementById('filterResponsavel').value;
   const fila = document.getElementById('filterFila').value;
   const prioridade = document.getElementById('filterPrioridade').value;
-  const bairro = document.getElementById('filterBairro').value;
-  const contrato = document.getElementById('filterContrato').value;
+  const bairro = document.getElementById('filterBairro').value.toLowerCase();
+  const contrato = document.getElementById('filterContrato').value.toLowerCase();
   const searchGeral = document.getElementById('searchGeral').value.toLowerCase();
+
+  const normalize = value => String(value || '').toLowerCase();
   
   filteredOrders = allOrders.filter(order => {
     if (status && order.status !== status) return false;
     if (responsavel && order.responsavel !== responsavel) return false;
     if (fila && order.fila !== fila) return false;
     if (prioridade && order.prioridade !== prioridade) return false;
-    if (bairro && !order.bairro?.toLowerCase().includes(bairro.toLowerCase())) return false;
-    if (contrato && !order.contrato?.toLowerCase().includes(contrato.toLowerCase())) return false;
+    if (bairro && !normalize(order.bairro).includes(bairro)) return false;
+    if (contrato && !normalize(order.contrato).includes(contrato)) return false;
     
     // Busca geral em múltiplos campos
     if (searchGeral) {
       const camposBusca = [
-        order.cliente?.toLowerCase() || '',
-        order.contrato?.toLowerCase() || '',
-        order.bairro?.toLowerCase() || '',
-        order.fila?.toLowerCase() || '',
-        order.responsavel?.toLowerCase() || '',
-        order.contato?.toLowerCase() || '',
-        order.os?.toString().toLowerCase() || '',
-        order.territorio?.toLowerCase() || '',
-        order.grupo_regiao?.toLowerCase() || ''
+        normalize(order.cliente),
+        normalize(order.contrato),
+        normalize(order.bairro),
+        normalize(order.fila),
+        normalize(order.responsavel),
+        normalize(order.contato),
+        normalize(order.os),
+        normalize(order.territorio),
+        normalize(order.grupo_regiao)
       ];
       
       const encontrado = camposBusca.some(campo => campo.includes(searchGeral));
