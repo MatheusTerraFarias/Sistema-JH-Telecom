@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JH Telecom - Sistema de Gestão de Ordens</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="navbar-container">
+      <div class="navbar-logo">
+        <span class="logo-icon">📡</span>
+        <span class="logo-text">JH Telecom</span>
+      </div>
+      
+      <div class="navbar-center">
+        <h2 id="pageTitle" class="page-title">Dashboard</h2>
+      </div>
+      
+      <div class="navbar-right">
+        <div id="userInfo" class="user-info">
+          <span id="userName" class="user-name">Desconectado</span>
+          <span id="userRole" class="user-role">-</span>
+        </div>
+        <button id="logoutBtn" class="btn-logout">Sair</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- MAIN CONTENT -->
+  <div class="container">
+    <!-- LOGIN PAGE -->
+    <div id="loginPage" class="page">
+      <div class="login-container">
+        <div class="login-card">
+          <h1 class="login-title">JH Telecom</h1>
+          <p class="login-subtitle">Sistema de Gestão de Ordens</p>
+          
+          <form id="loginForm" class="login-form">
+            <div class="form-group">
+              <label for="loginName">Usuário:</label>
+              <select id="loginName" required>
+                <option value="">Selecione um usuário</option>
+                <option value="Admin">Admin</option>
+                <option value="João">João (Atendente)</option>
+                <option value="Maria">Maria (Atendente)</option>
+                <option value="Carlos">Carlos (Atendente)</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="loginRole">Tipo de Acesso:</label>
+              <select id="loginRole" required>
+                <option value="">Selecione o tipo</option>
+                <option value="admin">Admin</option>
+                <option value="atendente">Atendente</option>
+              </select>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-block">Entrar</button>
+          </form>
+
+          <div id="loginError" class="alert alert-error" style="display: none;"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DASHBOARD PAGE -->
+    <div id="dashboardPage" class="page" style="display: none;">
+      <!-- SIDEBAR -->
+      <div class="sidebar">
+        <nav class="menu">
+          <button class="menu-item active" data-page="dashboard">
+            <span class="menu-icon">📊</span>
+            <span class="menu-text">Dashboard</span>
+          </button>
+          <button class="menu-item" data-page="orders">
+            <span class="menu-icon">📋</span>
+            <span class="menu-text">Ordens</span>
+          </button>
+          <button class="menu-item" data-page="users">
+            <span class="menu-icon">👥</span>
+            <span class="menu-text">Usuários</span>
+          </button>
+          <button id="adminMenuBtn" class="menu-item" data-page="admin" style="display: none;">
+            <span class="menu-icon">⚙️</span>
+            <span class="menu-text">Administração</span>
+          </button>
+        </nav>
+      </div>
+
+      <!-- CONTENT AREA -->
+      <div class="content">
+
+        <!-- DASHBOARD SECTION -->
+        <section id="dashboardSection" class="section">
+          <div class="section-header">
+            <h2>Dashboard</h2>
+          </div>
+
+          <!-- STATISTICS CARDS -->
+          <div class="stats-grid">
+            <div class="stat-card">
+              <div class="stat-icon stat-icon-1">📊</div>
+              <div class="stat-content">
+                <h3 class="stat-label">Total de Ordens</h3>
+                <p id="totalOrders" class="stat-value">0</p>
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-icon stat-icon-2">⚠️</div>
+              <div class="stat-content">
+                <h3 class="stat-label">Atrasadas</h3>
+                <p id="delayedOrders" class="stat-value">0</p>
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-icon stat-icon-3">✅</div>
+              <div class="stat-content">
+                <h3 class="stat-label">Finalizadas</h3>
+                <p id="completedOrders" class="stat-value">0</p>
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-icon stat-icon-4">🟢</div>
+              <div class="stat-content">
+                <h3 class="stat-label">Atendentes Online</h3>
+                <p id="onlineUsers" class="stat-value">0</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- STATUS DISTRIBUTION -->
+          <div class="dashboard-grid">
+            <div class="card">
+              <h3 class="card-title">Distribuição por Status</h3>
+              <div id="statusDistribution" class="status-list">
+                <!-- Preenchido por JavaScript -->
+              </div>
+            </div>
+
+            <div class="card">
+              <h3 class="card-title">Ordens por Atendente</h3>
+              <div id="ordersByAttendant" class="assignees-list">
+                <!-- Preenchido por JavaScript -->
+              </div>
+            </div>
+          </div>
+
+          <!-- QUICK ACTIONS -->
+          <div class="card" style="margin-top: 20px;">
+            <h3 class="card-title">Ações Rápidas</h3>
+            <div id="quickActionsDiv" class="actions-grid" style="display: none;">
+              <button id="distributeBtn" class="btn btn-primary">
+                <span class="btn-icon">📤</span> Distribuir Ordens
+              </button>
+              <button id="importBacklogBtn" class="btn btn-secondary">
+                <span class="btn-icon">📥</span> Importar Backlog
+              </button>
+              <button id="importFinalizadosBtn" class="btn btn-secondary">
+                <span class="btn-icon">📥</span> Importar Finalizados
+              </button>
+              <button id="refreshBtn" class="btn btn-secondary">
+                <span class="btn-icon">🔄</span> Atualizar
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- ORDERS SECTION -->
+        <section id="ordersSection" class="section" style="display: none;">
+          <div class="section-header">
+            <h2>Ordens de Serviço</h2>
+          </div>
+
+          <!-- FILTERS -->
+          <div class="card" style="margin-bottom: 20px;">
+            <div class="filters-grid">
+              <div class="filter-group">
+                <label>Status:</label>
+                <select id="filterStatus">
+                  <option value="">Todos</option>
+                  <option value="pendente">Pendente</option>
+                  <option value="atrasado">Atrasado</option>
+                  <option value="finalizado">Finalizado</option>
+                  <option value="cancelado">Cancelado</option>
+                  <option value="nao_concluido">Não Concluído</option>
+                  <option value="suspenso">Suspenso</option>
+                </select>
+              </div>
+
+              <div class="filter-group">
+                <label>Responsável:</label>
+                <select id="filterResponsavel">
+                  <option value="">Todos</option>
+                  <!-- Preenchido dinamicamente -->
+                </select>
+              </div>
+
+              <div class="filter-group">
+                <label>Fila:</label>
+                <select id="filterFila">
+                  <option value="">Todas</option>
+                  <!-- Preenchido dinamicamente -->
+                </select>
+              </div>
+
+              <div class="filter-group">
+                <label>Prioridade:</label>
+                <select id="filterPrioridade">
+                  <option value="">Todas</option>
+                  <!-- Preenchido dinamicamente -->
+                </select>
+              </div>
+
+              <div class="filter-group">
+                <label>Bairro:</label>
+                <input type="text" id="filterBairro" placeholder="Buscar bairro...">
+              </div>
+
+              <button id="applyFiltersBtn" class="btn btn-primary" style="align-self: flex-end;">
+                🔍 Filtrar
+              </button>
+            </div>
+          </div>
+
+          <!-- ORDERS TABLE -->
+          <div class="card">
+            <div style="overflow-x: auto;">
+              <table id="ordersTable" class="table">
+                <thead>
+                  <tr>
+                    <th class="th-small">#</th>
+                    <th>Cliente</th>
+                    <th>OS</th>
+                    <th>Fila</th>
+                    <th>Prioridade</th>
+                    <th>Bairro</th>
+                    <th>Status</th>
+                    <th>Responsável</th>
+                    <th>Dias em Aberto</th>
+                  </tr>
+                </thead>
+                <tbody id="ordersTableBody">
+                  <!-- Preenchido por JavaScript -->
+                </tbody>
+              </table>
+              <div id="noOrdersMsg" class="alert alert-info" style="display: none;">
+                Nenhuma ordem encontrada com os filtros aplicados.
+              </div>
+            </div>
+            <div class="table-pagination">
+              <button id="prevPageBtn" class="btn btn-small">← Anterior</button>
+              <span id="pageInfo" class="pagination-info">Página 1</span>
+              <button id="nextPageBtn" class="btn btn-small">Próxima →</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- USERS SECTION -->
+        <section id="usersSection" class="section" style="display: none;">
+          <div class="section-header">
+            <h2>Gerenciamento de Usuários</h2>
+          </div>
+
+          <div class="cards-grid">
+            <div class="card">
+              <h3 class="card-title">Usuários Cadastrados</h3>
+
+              <div class="users-list" id="usersList">
+                <!-- Preenchido por JavaScript -->
+              </div>
+            </div>
+
+            <div class="card">
+              <h3 class="card-title">Status Online</h3>
+              <div id="onlineStatus" class="status-badge-list">
+                <!-- Preenchido por JavaScript -->
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ADMIN SECTION -->
+        <section id="adminSection" class="section" style="display: none;">
+          <div class="section-header">
+            <h2>Administração</h2>
+          </div>
+
+          <!-- FILE IMPORTS -->
+          <div class="card">
+            <h3 class="card-title">Importar Dados</h3>
+            
+            <div class="import-grid">
+              <div class="import-box">
+                <div class="import-icon">📊</div>
+                <h4>Importar Backlog</h4>
+                <p>Carregue um arquivo Excel (backlog.xlsx)</p>
+                <button id="importBacklogBtnAdmin" class="btn btn-primary btn-block">
+                  Selecionar Arquivo
+                </button>
+                <input type="file" id="backlogFileInput" accept=".xlsx" style="display: none;">
+                <div id="backlogStatus" class="status-message"></div>
+              </div>
+
+              <div class="import-box">
+                <div class="import-icon">📋</div>
+                <h4>Importar Finalizados</h4>
+                <p>Carregue um arquivo CSV (finalizados.csv)</p>
+                <button id="importFinalizadosBtnAdmin" class="btn btn-primary btn-block">
+                  Selecionar Arquivo
+                </button>
+                <input type="file" id="finalizadosFileInput" accept=".csv" style="display: none;">
+                <div id="finalizadosStatus" class="status-message"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- DISTRIBUTION -->
+          <div class="card" style="margin-top: 20px;">
+            <h3 class="card-title">Distribuir Ordens</h3>
+            <p class="card-description">Distribui as ordens sem responsável entre os atendentes online (método round-robin)</p>
+            <button id="distributeBtnAdmin" class="btn btn-primary">
+              🚀 Distribuir Agora
+            </button>
+            <div id="distributionStatus" class="status-message"></div>
+          </div>
+
+          <!-- USER MANAGEMENT -->
+          <div class="card" style="margin-top: 20px;">
+            <h3 class="card-title">Gerenciar Status dos Usuários</h3>
+            <div id="userManagementDiv" class="user-management-grid">
+              <!-- Preenchido por JavaScript -->
+            </div>
+            <div id="userStatusMessage" class="status-message"></div>
+          </div>
+
+          <!-- STATISTICS -->
+          <div class="card" style="margin-top: 20px;">
+            <h3 class="card-title">Estatísticas Gerais</h3>
+            <div id="adminStats" class="admin-stats">
+              <!-- Preenchido por JavaScript -->
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- MODALS -->
+  <div id="loadingModal" class="modal" style="display: none;">
+    <div class="modal-content modal-loading">
+      <div class="spinner"></div>
+      <p id="loadingText">Carregando...</p>
+    </div>
+  </div>
+
+  <div id="confirmModal" class="modal" style="display: none;">
+    <div class="modal-content">
+      <h3 id="confirmTitle">Confirmação</h3>
+      <p id="confirmMessage"></p>
+      <div class="modal-footer">
+        <button id="confirmBtn" class="btn btn-primary">Confirmar</button>
+        <button id="cancelBtn" class="btn btn-secondary">Cancelar</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="successModal" class="modal" style="display: none;">
+    <div class="modal-content">
+      <h3>✅ Sucesso</h3>
+      <p id="successMessage"></p>
+      <div class="modal-footer">
+        <button id="closeSuccessBtn" class="btn btn-primary">OK</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="errorModal" class="modal" style="display: none;">
+    <div class="modal-content">
+      <h3>❌ Erro</h3>
+      <p id="errorMessage"></p>
+      <div class="modal-footer">
+        <button id="closeErrorBtn" class="btn btn-secondary">Fechar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCRIPTS -->
+  <script src="app.js"></script>
+</body>
+</html>
