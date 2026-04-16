@@ -2,7 +2,7 @@
 // Detectar ambiente (desenvolvimento vs produção)
 const isProduction = window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1';
 const API_BASE = isProduction 
-  ? 'https://sistema-jh-telecom-h5wvrx1r3-matheusterra0802-5300s-projects.vercel.app' // URL DO SEU BACKEND NO VERCEL
+  ? 'https://sistema-jh-telecom.vercel.app' // URL DO SEU BACKEND NO VERCEL
   : 'http://localhost:5000';
 
 let currentUser = null;
