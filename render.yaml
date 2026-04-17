@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: sistema-jh-telecom-backend
+    env: node
+    region: ohio
+    plan: free
+    buildCommand: cd backend && npm install
+    startCommand: cd backend && npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 5000
