@@ -1,5 +1,4 @@
 // ⚠️ Dados em memória — substituir por banco de dados (Prisma) futuramente
-const bcrypt = require('bcrypt');
 
 const users = [
   { 
