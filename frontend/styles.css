@@ -1283,6 +1283,43 @@ p {
   border: 1px solid rgba(245, 158, 11, 0.3);
 }
 
+/* ========== ADDITIONAL STYLES ========== */
+.table-wrapper {
+  overflow-x: auto;
+  border-radius: 6px;
+}
+
+.filter-apply-btn {
+  align-self: flex-end;
+}
+
+.filter-buttons {
+  display: flex;
+  gap: 10px;
+  align-items: flex-end;
+  flex-wrap: wrap;
+}
+
+.filter-buttons button {
+  white-space: nowrap;
+}
+
+.agendamento-form {
+  display: grid;
+  gap: 12px;
+}
+
+input[readonly] {
+  background-color: #f5f5f5;
+  cursor: not-allowed;
+  color: var(--text-secondary);
+}
+
+input[readonly]:focus {
+  outline: none;
+  border-color: var(--border);
+}
+
 /* ========== RESPONSIVE ========== */
 @media (max-width: 1200px) {
   .stats-grid {

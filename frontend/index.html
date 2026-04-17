@@ -55,7 +55,7 @@
             <button type="submit" class="btn btn-primary btn-block">Entrar</button>
           </form>
 
-          <div id="loginError" class="alert alert-error" style="display: none;"></div>
+          <div id="loginError" class="alert alert-error"></div>
         </div>
       </div>
     </div>
@@ -149,10 +149,10 @@
             </div>
           </div>
 
-          <!-- QUICK ACTIONS -->
-          <div class="card" style="margin-top: 20px;">
+          <!-- AÇÕES RÁPIDAS -->
+          <div class="card">
             <h3 class="card-title">Ações Rápidas</h3>
-            <div id="quickActionsDiv" class="actions-grid" style="display: none;">
+            <div id="quickActionsDiv" class="actions-grid">
               <button id="distributeBtn" class="btn btn-primary">
                 <span class="btn-icon">📤</span> Distribuir Ordens
               </button>
@@ -170,20 +170,18 @@
         </section>
 
         <!-- ORDERS SECTION -->
-        <section id="ordersSection" class="section" style="display: none;">
+        <section id="ordersSection" class="section">
           <div class="section-header">
             <h2>Ordens de Serviço</h2>
           </div>
 
           <!-- BUSCA GERAL -->
-          <div class="card" style="margin-bottom: 20px;">
-            <div class="search-container">
-              <input type="text" id="searchGeral" class="search-input" placeholder="🔍 Pesquise por nome, contrato, data, endereço, fila, atendente...">
-            </div>
+          <div class="card">
+            <input type="text" id="searchGeral" class="search-input" placeholder="🔍 Pesquise por nome, contrato, data, endereço, fila, atendente...">
           </div>
 
-          <!-- FILTERS -->
-          <div class="card" style="margin-bottom: 20px;">
+          <!-- FILTROS -->
+          <div class="card">
             <div class="filters-grid">
               <div class="filter-group">
                 <label>Status:</label>
@@ -232,15 +230,15 @@
                 <input type="text" id="filterContrato" placeholder="Buscar contrato...">
               </div>
 
-              <button id="applyFiltersBtn" class="btn btn-primary" style="align-self: flex-end;">
+              <button id="applyFiltersBtn" class="btn btn-primary filter-apply-btn">
                 🔍 Filtrar
               </button>
             </div>
           </div>
 
-          <!-- ORDERS TABLE -->
+          <!-- TABELA DE ORDENS -->
           <div class="card">
-            <div style="overflow-x: auto;">
+            <div class="table-wrapper">
               <table id="ordersTable" class="table">
                 <thead>
                   <tr>
@@ -262,9 +260,9 @@
                   <!-- Preenchido por JavaScript -->
                 </tbody>
               </table>
-              <div id="noOrdersMsg" class="alert alert-info" style="display: none;">
-                Nenhuma ordem encontrada com os filtros aplicados.
-              </div>
+            </div>
+            <div id="noOrdersMsg" class="alert alert-info">
+              Nenhuma ordem encontrada com os filtros aplicados.
             </div>
             <div class="table-pagination">
               <button id="prevPageBtn" class="btn btn-small">← Anterior</button>
@@ -275,18 +273,18 @@
         </section>
 
         <!-- AGENDAMENTO SECTION -->
-        <section id="agendamentoSection" class="section" style="display: none;">
+        <section id="agendamentoSection" class="section">
           <div class="section-header">
             <h2>📅 Agendamentos</h2>
           </div>
 
           <!-- BARRA DE PESQUISA GERAL -->
-          <div class="card" style="margin-bottom: 20px;">
-            <input type="text" id="searchAgendamentosGeral" class="search-input" placeholder="🔍 Pesquise por cliente, contrato, responsável, contato ou OS..." style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 14px;">
+          <div class="card">
+            <input type="text" id="searchAgendamentosGeral" class="search-input" placeholder="🔍 Pesquise por cliente, contrato, responsável, contato ou OS...">
           </div>
 
-          <!-- FILTROS -->
-          <div class="card" style="margin-bottom: 20px;">
+          <!-- FILTROS E BOTÕES -->
+          <div class="card">
             <div class="filters-grid">
               <div class="filter-group">
                 <label>Responsável:</label>
@@ -306,26 +304,19 @@
                 <input type="date" id="filterAgendamentoDataAte">
               </div>
 
-              <div style="display: flex; gap: 10px; align-items: flex-end;">
-                <button id="btnAteHoje" class="btn btn-secondary" style="white-space: nowrap;">📌 Até Hoje</button>
-                <button id="applyAgendamentosFiltersBtn" class="btn btn-primary" style="white-space: nowrap;">🔍 Filtrar</button>
-                <button id="exportAgendamentosExcelBtn" class="btn btn-success" style="white-space: nowrap;">📊 Excel</button>
-                <button id="exportAgendamentosCSVBtn" class="btn btn-info" style="white-space: nowrap;">📄 CSV</button>
+              <div class="filter-buttons">
+                <button id="btnAteHoje" class="btn btn-secondary">📌 Até Hoje</button>
+                <button id="applyAgendamentosFiltersBtn" class="btn btn-primary">🔍 Filtrar</button>
+                <button id="exportAgendamentosExcelBtn" class="btn btn-success">📊 Excel</button>
+                <button id="exportAgendamentosCSVBtn" class="btn btn-info">📄 CSV</button>
               </div>
             </div>
           </div>
 
-          <!-- LISTA DE AGENDAMENTOS -->
-          <div class="card">
-                📄 CSV
-              </button>
-            </div>
-          </div>
-
-          <!-- LISTA DE AGENDAMENTOS -->
+          <!-- TABELA DE AGENDAMENTOS -->
           <div class="card">
             <h3 class="card-title">Agendamentos Confirmados</h3>
-            <div style="overflow-x: auto;">
+            <div class="table-wrapper">
               <table id="agendamentosTable" class="table">
                 <thead>
                   <tr>
@@ -342,15 +333,15 @@
                   <!-- Preenchido dinamicamente -->
                 </tbody>
               </table>
-              <div id="noAgendamentosMsg" class="alert alert-info" style="display: none;">
-                Nenhum agendamento realizado.
-              </div>
+            </div>
+            <div id="noAgendamentosMsg" class="alert alert-info" style="display: none;">
+              Nenhum agendamento realizado.
             </div>
           </div>
         </section>
 
         <!-- USUARIOS SECTION -->
-        <section id="usersSection" class="section" style="display: none;">
+        <section id="usersSection" class="section">
           <div class="section-header">
             <h2>Gerenciamento de Usuários</h2>
           </div>
@@ -358,7 +349,6 @@
           <div class="cards-grid">
             <div class="card">
               <h3 class="card-title">Usuários Cadastrados</h3>
-
               <div class="users-list" id="usersList">
                 <!-- Preenchido por JavaScript -->
               </div>
@@ -374,7 +364,7 @@
         </section>
 
         <!-- ADMIN SECTION -->
-        <section id="adminSection" class="section" style="display: none;">
+        <section id="adminSection" class="section">
           <div class="section-header">
             <h2>Administração</h2>
           </div>
@@ -382,7 +372,6 @@
           <!-- FILE IMPORTS -->
           <div class="card">
             <h3 class="card-title">Importar Dados</h3>
-            
             <div class="import-grid">
               <div class="import-box">
                 <div class="import-icon">📊</div>
@@ -391,7 +380,7 @@
                 <button id="importBacklogBtnAdmin" class="btn btn-primary btn-block">
                   Selecionar Arquivo
                 </button>
-                <input type="file" id="backlogFileInput" accept=".xlsx" style="display: none;">
+                <input type="file" id="backlogFileInput" accept=".xlsx">
                 <div id="backlogStatus" class="status-message"></div>
               </div>
 
@@ -402,27 +391,27 @@
                 <button id="importFinalizadosBtnAdmin" class="btn btn-primary btn-block">
                   Selecionar Arquivo
                 </button>
-                <input type="file" id="finalizadosFileInput" accept=".csv" style="display: none;">
+                <input type="file" id="finalizadosFileInput" accept=".csv">
                 <div id="finalizadosStatus" class="status-message"></div>
               </div>
             </div>
           </div>
 
-          <!-- CONFIGURAÇÃO DE ATENDENTES POR TIPO DE SERVIÇO -->
-          <div class="card" style="margin-top: 20px;">
+          <!-- ATENDENTES POR TIPO DE SERVIÇO -->
+          <div class="card">
             <h3 class="card-title">⚙️ Atendentes por Tipo de Serviço</h3>
             <p class="card-description">Configure qual atendente atende cada tipo de serviço para distribuição automática</p>
             <div id="configAtendentesDiv" class="config-atendentes">
               <!-- Preenchido por JavaScript -->
             </div>
-            <button id="salvarConfigBtn" class="btn btn-primary" style="margin-top: 15px;">
+            <button id="salvarConfigBtn" class="btn btn-primary">
               ✅ Salvar Configuração
             </button>
             <div id="configStatus" class="status-message"></div>
           </div>
 
-          <!-- DISTRIBUTION -->
-          <div class="card" style="margin-top: 20px;">
+          <!-- DISTRIBUIÇÃO -->
+          <div class="card">
             <h3 class="card-title">Distribuir Ordens</h3>
             <p class="card-description">Distribui as ordens sem responsável entre os atendentes por tipo de serviço (método round-robin)</p>
             <button id="distributeBtnAdmin" class="btn btn-primary">
@@ -431,8 +420,8 @@
             <div id="distributionStatus" class="status-message"></div>
           </div>
 
-          <!-- USER MANAGEMENT -->
-          <div class="card" style="margin-top: 20px;">
+          <!-- GERENCIAMENTO DE USUÁRIOS -->
+          <div class="card">
             <h3 class="card-title">Gerenciar Status dos Usuários</h3>
             <div id="userManagementDiv" class="user-management-grid">
               <!-- Preenchido por JavaScript -->
@@ -440,8 +429,8 @@
             <div id="userStatusMessage" class="status-message"></div>
           </div>
 
-          <!-- STATISTICS -->
-          <div class="card" style="margin-top: 20px;">
+          <!-- ESTATÍSTICAS -->
+          <div class="card">
             <h3 class="card-title">Estatísticas Gerais</h3>
             <div id="adminStats" class="admin-stats">
               <!-- Preenchido por JavaScript -->
@@ -454,14 +443,14 @@
   </div>
 
   <!-- MODALS -->
-  <div id="loadingModal" class="modal" style="display: none;">
+  <div id="loadingModal" class="modal">
     <div class="modal-content modal-loading">
       <div class="spinner"></div>
       <p id="loadingText">Carregando...</p>
     </div>
   </div>
 
-  <div id="confirmModal" class="modal" style="display: none;">
+  <div id="confirmModal" class="modal">
     <div class="modal-content">
       <h3 id="confirmTitle">Confirmação</h3>
       <p id="confirmMessage"></p>
@@ -472,7 +461,7 @@
     </div>
   </div>
 
-  <div id="successModal" class="modal" style="display: none;">
+  <div id="successModal" class="modal">
     <div class="modal-content">
       <h3>✅ Sucesso</h3>
       <p id="successMessage"></p>
@@ -482,7 +471,7 @@
     </div>
   </div>
 
-  <div id="errorModal" class="modal" style="display: none;">
+  <div id="errorModal" class="modal">
     <div class="modal-content">
       <h3>❌ Erro</h3>
       <p id="errorMessage"></p>
@@ -493,28 +482,28 @@
   </div>
 
   <!-- MODAL DE AGENDAMENTO -->
-  <div id="agendamentoModal" class="modal" style="display: none;">
+  <div id="agendamentoModal" class="modal">
     <div class="modal-content">
       <h3>📅 Agendar Ordem de Serviço</h3>
-      <form id="agendamentoForm" style="display: grid; gap: 12px;">
+      <form id="agendamentoForm" class="agendamento-form">
         <div class="form-group">
           <label>Contrato:</label>
-          <input type="text" id="modalContrato" readonly style="background-color: #f5f5f5;">
+          <input type="text" id="modalContrato" readonly>
         </div>
 
         <div class="form-group">
           <label>OS:</label>
-          <input type="text" id="modalOS" readonly style="background-color: #f5f5f5;">
+          <input type="text" id="modalOS" readonly>
         </div>
 
         <div class="form-group">
           <label>Cliente:</label>
-          <input type="text" id="modalCliente" readonly style="background-color: #f5f5f5;">
+          <input type="text" id="modalCliente" readonly>
         </div>
 
         <div class="form-group">
           <label>Telefone:</label>
-          <input type="text" id="modalTelefone" readonly style="background-color: #f5f5f5;">
+          <input type="text" id="modalTelefone" readonly>
         </div>
 
         <div class="form-group">
